@@ -1,0 +1,14 @@
+---
+- name: Validaciones Parchado en RHEL 9 sin cambios
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Crear archivo de log si no existe
+      ansible.builtin.file:
+        path: /var/log/ansible_validations.log
+        state: touch
+
+    - name: Verificar si el sistema está actualizado
+      ansible.builtin.shell: yum check-update
+      register: update_check
+      ignore_errors: yes
